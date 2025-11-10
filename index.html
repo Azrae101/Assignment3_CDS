@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Algorithmic Mirror - Discover Your Consumer Persona</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .form-container {
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .age-slider-container {
+            padding: 0 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .age-value {
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        select, .self-describe {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #333;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, .self-describe:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .self-describe {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .disclaimer {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .disclaimer p {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .loading {
+            display: none;
+            margin-top: 10px;
+            color: #667eea;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🪞 The Algorithmic Mirror</div>
+        <p class="tagline">A Critical Data Visualization</p>
+        
+        <h1>Let's find your perfect shopping match!</h1>
+        <p class="subtitle">Answer three simple questions to personalize your experience.</p>
+        
+        <form id="personaForm" class="form-container">
+            <!-- Age Group -->
+            <div class="form-group">
+                <label for="age">What's your age?</label>
+                <div class="age-slider-container">
+                    <input type="range" id="age" name="age" min="18" max="65" value="25">
+                    <div class="age-value" id="ageValue">25 years old</div>
+                </div>
+            </div>
+            
+            <!-- Gender -->
+            <div class="form-group">
+                <label for="gender">How do you identify?</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Please select...</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="not-say">Prefer not to say</option>
+                    <option value="self-describe">Prefer to self-describe</option>
+                </select>
+                <input type="text" class="self-describe" id="selfDescribe" placeholder="Please describe...">
+            </div>
+            
+            <!-- Spending -->
+            <div class="form-group">
+                <label for="spending">On a typical month, how much do you spend on non-essential online purchases? (in ₹)</label>
+                <select id="spending" name="spending" required>
+                    <option value="">Please select...</option>
+                    <option value="low">Less than ₹1,000</option>
+                    <option value="medium-low">₹1,000 - ₹5,000</option>
+                    <option value="medium">₹5,000 - ₹10,000</option>
+                    <option value="high">More than ₹10,000</option>
+                </select>
+            </div>
+            
+            <!-- Critical Disclaimer -->
+            <div class="disclaimer">
+                <p>🔍 <strong>Critical Note:</strong> This tool demonstrates how e-commerce platforms categorize users. The categories used here reflect common marketing practices that we will critically examine.</p>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                Discover My Persona
+            </button>
+            <div class="loading" id="loading">Analyzing your consumer profile...</div>
+        </form>
+    </div>
+
+    <script>
+        // Update age value display
+        const ageSlider = document.getElementById('age');
+        const ageValue = document.getElementById('ageValue');
+        
+        ageSlider.addEventListener('input', function() {
+            ageValue.textContent = `${this.value} years old`;
+        });
+
+        // Handle gender self-description
+        const genderSelect = document.getElementById('gender');
+        const selfDescribe = document.getElementById('selfDescribe');
+        
+        genderSelect.addEventListener('change', function() {
+            if (this.value === 'self-describe') {
+                selfDescribe.style.display = 'block';
+                selfDescribe.required = true;
+            } else {
+                selfDescribe.style.display = 'none';
+                selfDescribe.required = false;
+            }
+        });
+
+        // Form submission
+        document.getElementById('personaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const loading = document.getElementById('loading');
+            const submitBtn = this.querySelector('.submit-btn');
+            
+            // Show loading state
+            submitBtn.style.display = 'none';
+            loading.style.display = 'block';
+            
+            // Get form values
+            const formData = {
+                age: document.getElementById('age').value,
+                gender: document.getElementById('gender').value,
+                spending: document.getElementById('spending').value
+            };
+            
+            // Handle self-description
+            if (formData.gender === 'self-describe') {
+                formData.genderDescription = document.getElementById('selfDescribe').value;
+            }
+            
+            // Store in sessionStorage
+            sessionStorage.setItem('userData', JSON.stringify(formData));
+            
+            // Simulate processing delay for better UX
+            setTimeout(() => {
+                window.location.href = 'persona.html';
+            }, 1500);
+        });
+
+        // Input validation
+        const inputs = document.querySelectorAll('select[required]');
+        inputs.forEach(input => {
+            input.addEventListener('change', function() {
+                this.style.borderColor = this.value ? '#667eea' : '#e9ecef';
+            });
+        });
+    </script>
+</body>
+</html>
