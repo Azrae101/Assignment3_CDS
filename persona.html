@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Consumer Persona - The Algorithmic Mirror</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .reveal-text {
+            color: #667eea;
+            font-size: 18px;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .persona-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: left;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .persona-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .avatar-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 20px;
+            border: 3px solid #667eea;
+        }
+
+        .persona-header {
+            flex: 1;
+        }
+
+        .persona-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .persona-details {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .persona-description {
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .insight-box {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            margin-bottom: 30px;
+        }
+
+        .insight-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .insight-stat {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .insight-text {
+            color: #444;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+        }
+
+        .disclaimer {
+            margin-top: 30px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 10px;
+            border: 1px solid #ffeaa7;
+        }
+
+        .disclaimer p {
+            color: #856404;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .avatar-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🪞 The Algorithmic Mirror</div>
+        <p class="tagline">A Critical Data Visualization</p>
+        
+        <h1>Your Consumer Persona</h1>
+        <p class="reveal-text">Based on your input, here's how e-commerce platforms see you:</p>
+        
+        <div class="persona-card">
+            <div class="avatar-container">
+                <img id="avatar" class="avatar" src="" alt="Your algorithmic avatar">
+                <div class="persona-header">
+                    <div id="personaName" class="persona-name">The Value-Conscious Maximizer</div>
+                    <div id="personaDetails" class="persona-details">Age: 25 • Female • Medium Spender</div>
+                </div>
+            </div>
+            
+            <div id="personaDescription" class="persona-description">
+                You're part of the largest and most targeted segment. Our data shows your group is highly sensitive to price-perception gaps. You often believe you're getting a better deal than you are, making you susceptible to 'limited-time offers' and decoy pricing strategies.
+            </div>
+        </div>
+        
+        <div class="insight-box">
+            <div class="insight-title">Key Data Insight</div>
+            <div id="insightStat" class="insight-stat">680,000</div>
+            <div id="insightText" class="insight-text">people in your demographic share this behavioral profile according to our analysis of 1.25 million transactions.</div>
+        </div>
+        
+        <div class="button-group">
+            <a href="critique.html" class="btn btn-primary">See How This Works</a>
+            <a href="index.html" class="btn btn-secondary">Start Over</a>
+        </div>
+        
+        <div class="disclaimer">
+            <p>⚠️ <strong>Remember:</strong> This persona is a statistical construct based on limited data points. Real people are more complex than any algorithmic categorization.</p>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve user data from sessionStorage
+        const userData = JSON.parse(sessionStorage.getItem('userData'));
+        
+        // If no data, redirect to index
+        if (!userData) {
+            window.location.href = 'index.html';
+        }
+        
+        // Persona mapping rules
+        const personas = {
+            low: {
+                young: {
+                    name: "The Budget-Conscious Explorer",
+                    description: "You carefully manage your spending and seek maximum value from every purchase. E-commerce platforms target you with flash sales and budget-friendly alternatives. Your price perception tends to be accurate for low-to-mid range products, but you might overvalue premium brands due to aspirational marketing.",
+                    insight: "You share this profile with 42% of 18-24 year olds in our dataset."
+                },
+                middle: {
+                    name: "The Pragmatic Budgeter",
+                    description: "You have established spending habits and prioritize practical value over brand prestige. Algorithms show you reliable, mid-range products with strong reviews. Your perception of value aligns closely with actual prices, making you less susceptible to dynamic pricing strategies.",
+                    insight: "This segment shows the smallest perception gap (-5% to +8%) across all price ranges."
+                },
+                senior: {
+                    name: "The Discerning Saver",
+                    description: "You take a methodical approach to online shopping, comparing options thoroughly before purchasing. Platforms often show you comparison tools and highlight long-term value. Your consumer behavior is characterized by careful consideration rather than impulse.",
+                    insight: "Your demographic accounts for only 12% of transactions but 18% of total product research time."
+                }
+            },
+            'medium-low': {
+                young: {
+                    name: "The Value-Optimistic Explorer",
+                    description: "You're optimistic about finding great deals and enjoy the hunt for value. E-commerce platforms leverage this by showing you 'limited stock' notifications and personalized discounts. Your perceived value often slightly exceeds actual prices, especially for trending products.",
+                    insight: "68% of your segment demonstrates Value-Optimistic behavior according to our clustering analysis."
+                },
+                middle: {
+                    name: "The Balanced Spender",
+                    description: "You strike a balance between quality and affordability, making informed decisions based on product research. Platforms target you with mid-range options and emphasize cost-per-use value. Your perception is most accurate in the ₹1,000-₹5,000 price range.",
+                    insight: "This is the largest behavioral segment, representing 34% of all customers in the dataset."
+                },
+                senior: {
+                    name: "The Selective Investor",
+                    description: "You view purchases as investments in quality and longevity rather than immediate gratification. Algorithms prioritize showing you durable goods with strong warranties and lifetime value propositions. Your perception gaps are smallest for practical, utilitarian products.",
+                    insight: "Your age group shows a 22% higher retention rate for premium brands compared to younger segments."
+                }
+            },
+            medium: {
+                young: {
+                    name: "The Aspirational Spender",
+                    description: "You're building your lifestyle and willing to invest in quality items that reflect your identity. Platforms show you aspirational brands and emphasize social proof through reviews and influencer endorsements. Your perceived value often exceeds actual price for status-signaling products.",
+                    insight: "Your segment has the highest perception gap for luxury goods (+18% on average)."
+                },
+                middle: {
+                    name: "The Quality-Focused Professional",
+                    description: "You prioritize durability, functionality, and time savings over initial cost. E-commerce algorithms highlight premium features, warranty information, and time-saving benefits. Your perception is most accurate for professional and productivity-related purchases.",
+                    insight: "This group accounts for 45% of premium electronics purchases despite being only 28% of the customer base."
+                },
+                senior: {
+                    name: "The Experienced Curator",
+                    description: "You have refined tastes and knowledge about what constitutes true quality in different product categories. Platforms show you specialized retailers and emphasize craftsmanship and materials. Your perception gaps are smallest in categories where you have extensive prior experience.",
+                    insight: "Your demographic demonstrates the most consistent price perception across different product categories."
+                }
+            },
+            high: {
+                young: {
+                    name: "The Premium Trendsetter",
+                    description: "You value exclusivity, innovation, and being an early adopter of new products. E-commerce platforms prioritize showing you limited editions, new releases, and luxury collaborations. Your perceived value is highly influenced by brand prestige and social currency.",
+                    insight: "Your segment shows a 35% higher click-through rate on premium product recommendations."
+                },
+                middle: {
+                    name: "The Connoisseur Investor",
+                    description: "You appreciate fine craftsmanship and are willing to pay premium prices for exceptional quality and performance. Algorithms highlight artisanal brands, premium materials, and exclusive buying experiences. Your perception of value incorporates both tangible quality and intangible brand value.",
+                    insight: "This group has the highest average order value (₹12,500) across all segments."
+                },
+                senior: {
+                    name: "The Discerning Patron",
+                    description: "You have the means and experience to invest in heirloom-quality items and exceptional customer experiences. Platforms offer you concierge services, exclusive access, and personalized shopping assistance. Your perception of value incorporates both product quality and service excellence.",
+                    insight: "Your demographic represents only 8% of customers but 22% of revenue from luxury categories."
+                }
+            }
+        };
+        
+        // Determine age group
+        function getAgeGroup(age) {
+            if (age <= 24) return 'young';
+            if (age <= 44) return 'middle';
+            return 'senior';
+        }
+        
+        // Generate avatar seed based on user data
+        function generateAvatarSeed(age, gender, spending) {
+            return `${age}-${gender}-${spending}`;
+        }
+        
+        // Display the persona
+        function displayPersona() {
+            const age = parseInt(userData.age);
+            const gender = userData.gender;
+            const spending = userData.spending;
+            const ageGroup = getAgeGroup(age);
+            
+            // Get the appropriate persona
+            const persona = personas[spending][ageGroup];
+            
+            // Display persona details
+            document.getElementById('personaName').textContent = persona.name;
+            
+            // Format gender display
+            let genderDisplay = gender;
+            if (gender === 'female') genderDisplay = 'Female';
+            else if (gender === 'male') genderDisplay = 'Male';
+            else if (gender === 'not-say') genderDisplay = 'Prefer not to say';
+            else if (gender === 'self-describe') genderDisplay = userData.genderDescription || 'Self-described';
+            
+            // Format spending display
+            let spendingDisplay = '';
+            switch(spending) {
+                case 'low': spendingDisplay = 'Low Spender'; break;
+                case 'medium-low': spendingDisplay = 'Medium-Low Spender'; break;
+                case 'medium': spendingDisplay = 'Medium Spender'; break;
+                case 'high': spendingDisplay = 'High Spender'; break;
+            }
+            
+            document.getElementById('personaDetails').textContent = 
+                `Age: ${age} • ${genderDisplay} • ${spendingDisplay}`;
+            
+            document.getElementById('personaDescription').textContent = persona.description;
+            document.getElementById('insightText').textContent = persona.insight;
+            
+            // Generate and display avatar
+            const avatarSeed = generateAvatarSeed(age, gender, spending);
+            const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${avatarSeed}&radius=50&backgroundColor=65c9ff,b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf&eyes=happy,wink,hearts&mouth=smile,laughing,twinkle`;
+            document.getElementById('avatar').src = avatarUrl;
+            
+            // Generate a realistic statistic based on the persona
+            generateStatistic(ageGroup, spending, gender);
+        }
+        
+        // Generate a realistic statistic based on the dataset
+        function generateStatistic(ageGroup, spending, gender) {
+            const stats = {
+                young: {
+                    low: "680,000 people in your age group share this profile",
+                    'medium-low': "420,000 young adults demonstrate similar spending patterns",
+                    medium: "Your segment accounts for 28% of aspirational brand purchases",
+                    high: "Premium Trendsetters represent 15% of young adult shoppers"
+                },
+                middle: {
+                    low: "This is the most common profile for middle-aged budget shoppers",
+                    'medium-low': "34% of all customers fall into this behavioral segment",
+                    medium: "Your group drives 45% of premium electronics sales",
+                    high: "Connoisseur Investors have the highest customer lifetime value"
+                },
+                senior: {
+                    low: "Your demographic shows the most consistent price perception",
+                    'medium-low': "Senior shoppers account for 22% of high-retention purchases",
+                    medium: "Experienced Curators have the most accurate luxury brand perception",
+                    high: "Discerning Patrons represent 8% of customers but 22% of luxury revenue"
+                }
+            };
+            
+            document.getElementById('insightStat').textContent = 
+                stats[ageGroup][spending] || "Data pattern identified across 1.25M transactions";
+        }
+        
+        // Initialize the page
+        displayPersona();
+    </script>
+</body>
+</html>
