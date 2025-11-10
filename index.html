@@ -206,19 +206,30 @@
                 <input type="text" class="self-describe" id="selfDescribe" placeholder="Please describe...">
             </div>
             
+            <!-- Currency Choice -->
+            <div class="form-group">
+                <label for="currency">Choose your preferred currency:</label>
+                <select id="currency" name="currency" required>
+                    <option value="INR">₹ Indian Rupee (INR)</option>
+                    <option value="IDR">Rp Indonesian Rupiah (IDR)</option>
+                    <option value="DKK" selected>DKK Danish Krone (DKK)</option>
+                    <option value="USD">$ US Dollar (USD)</option>
+                    <option value="EUR">€ Euro (EUR)</option>
+                </select>
+            </div>
+
             <!-- Spending -->
             <div class="form-group">
-                <label for="spending">On a typical month, how much do you spend on non-essential online purchases? (in ₹)</label>
+                <label for="spending" id="spendingLabel">On a typical month, how much do you spend on non-essential online purchases? (in DKK)</label>
                 <select id="spending" name="spending" required>
                     <option value="">Please select...</option>
-                    <option value="low">Less than ₹1,000</option>
-                    <option value="medium-low">₹1,000 - ₹5,000</option>
-                    <option value="medium">₹5,000 - ₹10,000</option>
-                    <option value="high">More than ₹10,000</option>
+                    <option value="low">Less than DKK 500</option>
+                    <option value="medium-low">DKK 500 - DKK 1,500</option>
+                    <option value="medium">DKK 1,500 - DKK 3,000</option>
+                    <option value="high">More than DKK 3,000</option>
                 </select>
             </div>
             
-            <!-- Critical Disclaimer -->
             <div class="disclaimer">
                 <p>🔍 <strong>Critical Note:</strong> This tool demonstrates how e-commerce platforms categorize users. The categories used here reflect common marketing practices that we will critically examine.</p>
             </div>
@@ -231,63 +242,81 @@
     </div>
 
     <script>
-        // Update age value display
         const ageSlider = document.getElementById('age');
         const ageValue = document.getElementById('ageValue');
-        
-        ageSlider.addEventListener('input', function() {
-            ageValue.textContent = `${this.value} years old`;
+        const currencySelect = document.getElementById('currency');
+        const spendingLabel = document.getElementById('spendingLabel');
+        const spendingOptions = document.getElementById('spending').options;
+
+        ageSlider.addEventListener('input', () => {
+            ageValue.textContent = `${ageSlider.value} years old`;
         });
 
-        // Handle gender self-description
-        const genderSelect = document.getElementById('gender');
-        const selfDescribe = document.getElementById('selfDescribe');
-        
-        genderSelect.addEventListener('change', function() {
-            if (this.value === 'self-describe') {
-                selfDescribe.style.display = 'block';
-                selfDescribe.required = true;
-            } else {
-                selfDescribe.style.display = 'none';
-                selfDescribe.required = false;
+        // Updated spending tiers based on Danish household consumption data
+        const currencies = {
+            INR: { 
+                symbol: '₹', 
+                label: 'in ₹', 
+                tiers: ['Less than ₹1,000','₹1,000 - ₹3,000','₹3,000 - ₹6,000','More than ₹6,000'] 
+            },
+            IDR: { 
+                symbol: 'Rp', 
+                label: 'in Rp', 
+                tiers: ['Less than Rp 200K','Rp 200K - Rp 600K','Rp 600K - Rp 1.2M','More than Rp 1.2M'] 
+            },
+            DKK: { 
+                symbol: 'DKK', 
+                label: 'in DKK', 
+                // Based on Danish household spending data (approx 12,000 DKK annual = 1,000 DKK monthly)
+                tiers: ['Less than DKK 500','DKK 500 - DKK 1,500','DKK 1,500 - DKK 3,000','More than DKK 3,000'] 
+            },
+            USD: { 
+                symbol: '$', 
+                label: 'in USD', 
+                tiers: ['Less than $60','$60 - $180','$180 - $360','More than $360'] 
+            },
+            EUR: { 
+                symbol: '€', 
+                label: 'in €', 
+                tiers: ['Less than €55','€55 - €165','€165 - €330','More than €330'] 
+            },
+        };
+
+        currencySelect.addEventListener('change', () => {
+            const selected = currencies[currencySelect.value];
+            spendingLabel.textContent = `On a typical month, how much do you spend on non-essential online purchases? (${selected.label})`;
+            for (let i = 1; i < spendingOptions.length; i++) {
+                spendingOptions[i].textContent = selected.tiers[i - 1];
             }
         });
 
-        // Form submission
+        const genderSelect = document.getElementById('gender');
+        const selfDescribe = document.getElementById('selfDescribe');
+        genderSelect.addEventListener('change', function() {
+            selfDescribe.style.display = this.value === 'self-describe' ? 'block' : 'none';
+            selfDescribe.required = this.value === 'self-describe';
+        });
+
         document.getElementById('personaForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             const loading = document.getElementById('loading');
             const submitBtn = this.querySelector('.submit-btn');
-            
-            // Show loading state
             submitBtn.style.display = 'none';
             loading.style.display = 'block';
-            
-            // Get form values
             const formData = {
                 age: document.getElementById('age').value,
                 gender: document.getElementById('gender').value,
-                spending: document.getElementById('spending').value
+                spending: document.getElementById('spending').value,
+                currency: document.getElementById('currency').value
             };
-            
-            // Handle self-description
             if (formData.gender === 'self-describe') {
                 formData.genderDescription = document.getElementById('selfDescribe').value;
             }
-            
-            // Store in sessionStorage
             sessionStorage.setItem('userData', JSON.stringify(formData));
-            
-            // Simulate processing delay for better UX
-            setTimeout(() => {
-                window.location.href = 'persona.html';
-            }, 1500);
+            setTimeout(() => { window.location.href = 'persona.html'; }, 1500);
         });
 
-        // Input validation
-        const inputs = document.querySelectorAll('select[required]');
-        inputs.forEach(input => {
+        document.querySelectorAll('select[required]').forEach(input => {
             input.addEventListener('change', function() {
                 this.style.borderColor = this.value ? '#667eea' : '#e9ecef';
             });
