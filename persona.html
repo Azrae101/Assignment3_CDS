@@ -109,6 +109,35 @@
             font-size: 15px;
         }
 
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .insight-box {
             background: #fff;
             border-radius: 10px;
@@ -212,6 +241,10 @@
                 margin-right: 0;
                 margin-bottom: 15px;
             }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -227,20 +260,39 @@
             <div class="avatar-container">
                 <img id="avatar" class="avatar" src="" alt="Your algorithmic avatar">
                 <div class="persona-header">
-                    <div id="personaName" class="persona-name">The Value-Conscious Maximizer</div>
+                    <div id="personaName" class="persona-name">The Value-Optimistic Shopper</div>
                     <div id="personaDetails" class="persona-details">Age: 25 • Female • Medium Spender</div>
                 </div>
             </div>
             
             <div id="personaDescription" class="persona-description">
-                You're part of the largest and most targeted segment. Our data shows your group is highly sensitive to price-perception gaps. You often believe you're getting a better deal than you are, making you susceptible to 'limited-time offers' and decoy pricing strategies.
+                Based on your demographic profile and spending patterns, you align with one of the key behavioral segments identified in our analysis of 1.25 million e-commerce transactions.
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div id="segmentSize" class="stat-value">211,128</div>
+                    <div class="stat-label">People in your segment</div>
+                </div>
+                <div class="stat-box">
+                    <div id="segmentPercentage" class="stat-value">16.8%</div>
+                    <div class="stat-label">Of total customers</div>
+                </div>
+                <div class="stat-box">
+                    <div id="pricePerception" class="stat-value">+20.0%</div>
+                    <div class="stat-label">Value perception gap</div>
+                </div>
+                <div class="stat-box">
+                    <div id="avgTransaction" class="stat-value">₹1.08M</div>
+                    <div class="stat-label">Avg. transaction</div>
+                </div>
             </div>
         </div>
         
         <div class="insight-box">
-            <div class="insight-title">Key Data Insight</div>
-            <div id="insightStat" class="insight-stat">680,000</div>
-            <div id="insightText" class="insight-text">people in your demographic share this behavioral profile according to our analysis of 1.25 million transactions.</div>
+            <div class="insight-title">Dataset Insight</div>
+            <div id="insightStat" class="insight-stat">1.25 Million</div>
+            <div id="insightText" class="insight-text">e-commerce transactions analyzed from the Kaggle dataset. Your persona is based on actual behavioral patterns identified in this data.</div>
         </div>
         
         <div class="button-group">
@@ -254,6 +306,128 @@
     </div>
 
     <script>
+        // Behavioral segments from your analysis
+        const segments = {
+            'Value-Optimistic': {
+                count: 211128,
+                percentage: 16.8,
+                description: "You perceive products as more valuable than their actual price, showing optimism in your purchasing decisions. This makes you particularly receptive to premium branding and perceived quality enhancements.",
+                priceGap: '+20.0%',
+                avgTransaction: '₹1.08M',
+                financial: {
+                    avgActualPrice: '₹181,341',
+                    avgPerceivedValue: '₹217,591'
+                }
+            },
+            'Value-Realistic': {
+                count: 211117,
+                percentage: 16.8,
+                description: "Your perception of value aligns closely with actual prices, indicating a balanced and practical approach to shopping. You're less influenced by marketing tactics and more focused on actual utility.",
+                priceGap: '-0.0%',
+                avgTransaction: '₹1.08M',
+                financial: {
+                    avgActualPrice: '₹181,145',
+                    avgPerceivedValue: '₹181,105'
+                }
+            },
+            'Value-Pessimistic': {
+                count: 210799,
+                percentage: 16.8,
+                description: "You tend to undervalue products relative to their actual price, approaching purchases with caution. This makes you highly price-sensitive and focused on getting the best possible deal.",
+                priceGap: '-20.0%',
+                avgTransaction: '₹0.96M',
+                financial: {
+                    avgActualPrice: '₹181,229',
+                    avgPerceivedValue: '₹144,963'
+                }
+            },
+            'Premium-Optimistic': {
+                count: 184808,
+                percentage: 14.7,
+                description: "You show strong optimism toward premium products, perceiving them as offering exceptional value. You're likely influenced by brand reputation and aspirational marketing.",
+                priceGap: '+20.0%',
+                avgTransaction: '₹2.45M',
+                financial: {
+                    avgActualPrice: '₹724,321',
+                    avgPerceivedValue: '₹869,185'
+                }
+            },
+            'Premium-Realistic': {
+                count: 185212,
+                percentage: 14.8,
+                description: "You have a realistic understanding of premium product values, balancing quality considerations with price awareness. You make deliberate decisions about when premium pricing is justified.",
+                priceGap: '0.0%',
+                avgTransaction: '₹2.42M',
+                financial: {
+                    avgActualPrice: '₹724,102',
+                    avgPerceivedValue: '₹724,102'
+                }
+            },
+            'Premium-Pessimistic': {
+                count: 184722,
+                percentage: 14.7,
+                description: "You're skeptical of premium pricing, often perceiving high-end products as overvalued. You require clear justification for price premiums and are difficult to convince on luxury items.",
+                priceGap: '-20.0%',
+                avgTransaction: '₹2.38M',
+                financial: {
+                    avgActualPrice: '₹724,456',
+                    avgPerceivedValue: '₹579,565'
+                }
+            },
+            'Budget-Optimistic': {
+                count: 22178,
+                percentage: 1.8,
+                description: "Despite budget constraints, you maintain an optimistic view of value, finding hidden gems and believing you're getting great deals on affordable products.",
+                priceGap: '+20.0%',
+                avgTransaction: '₹0.32M',
+                financial: {
+                    avgActualPrice: '₹48,234',
+                    avgPerceivedValue: '₹57,861'
+                }
+            },
+            'Budget-Realistic': {
+                count: 22131,
+                percentage: 1.8,
+                description: "You have a practical understanding of budget product values, making careful purchasing decisions within your financial constraints while maintaining realistic expectations.",
+                priceGap: '0.0%',
+                avgTransaction: '₹0.31M',
+                financial: {
+                    avgActualPrice: '₹48,201',
+                    avgPerceivedValue: '₹48,201'
+                }
+            },
+            'Budget-Pessimistic': {
+                count: 22490,
+                percentage: 1.8,
+                description: "You approach budget shopping with caution, often skeptical of even low-priced items and constantly searching for better value alternatives.",
+                priceGap: '-20.0%',
+                avgTransaction: '₹0.29M',
+                financial: {
+                    avgActualPrice: '₹48,345',
+                    avgPerceivedValue: '₹38,666'
+                }
+            }
+        };
+
+        // Demographic patterns from your analysis
+        const agePatterns = {
+            '18-24': 'Value-Optimistic',
+            '25-34': 'Value-Optimistic', 
+            '35-44': 'Value-Pessimistic',
+            '45-54': 'Value-Optimistic',
+            '55-64': 'Value-Realistic',
+            '65-74': 'Value-Realistic',
+            '75-84': 'Value-Realistic',
+            '85+': 'Value-Realistic'
+        };
+
+        const genderPatterns = {
+            'F': 'Value-Realistic',
+            'M': 'Value-Optimistic',
+            'not-say': 'Value-Realistic',
+            'self-describe': 'Value-Realistic'
+        };
+
         // Retrieve user data from sessionStorage
         const userData = JSON.parse(sessionStorage.getItem('userData'));
         
@@ -262,88 +436,53 @@
             window.location.href = 'index.html';
         }
         
-        // Persona mapping rules
-        const personas = {
-            low: {
-                young: {
-                    name: "The Budget-Conscious Explorer",
-                    description: "You carefully manage your spending and seek maximum value from every purchase. E-commerce platforms target you with flash sales and budget-friendly alternatives. Your price perception tends to be accurate for low-to-mid range products, but you might overvalue premium brands due to aspirational marketing.",
-                    insight: "You share this profile with 42% of 18-24 year olds in our dataset."
-                },
-                middle: {
-                    name: "The Pragmatic Budgeter",
-                    description: "You have established spending habits and prioritize practical value over brand prestige. Algorithms show you reliable, mid-range products with strong reviews. Your perception of value aligns closely with actual prices, making you less susceptible to dynamic pricing strategies.",
-                    insight: "This segment shows the smallest perception gap (-5% to +8%) across all price ranges."
-                },
-                senior: {
-                    name: "The Discerning Saver",
-                    description: "You take a methodical approach to online shopping, comparing options thoroughly before purchasing. Platforms often show you comparison tools and highlight long-term value. Your consumer behavior is characterized by careful consideration rather than impulse.",
-                    insight: "Your demographic accounts for only 12% of transactions but 18% of total product research time."
-                }
-            },
-            'medium-low': {
-                young: {
-                    name: "The Value-Optimistic Explorer",
-                    description: "You're optimistic about finding great deals and enjoy the hunt for value. E-commerce platforms leverage this by showing you 'limited stock' notifications and personalized discounts. Your perceived value often slightly exceeds actual prices, especially for trending products.",
-                    insight: "68% of your segment demonstrates Value-Optimistic behavior according to our clustering analysis."
-                },
-                middle: {
-                    name: "The Balanced Spender",
-                    description: "You strike a balance between quality and affordability, making informed decisions based on product research. Platforms target you with mid-range options and emphasize cost-per-use value. Your perception is most accurate in the ₹1,000-₹5,000 price range.",
-                    insight: "This is the largest behavioral segment, representing 34% of all customers in the dataset."
-                },
-                senior: {
-                    name: "The Selective Investor",
-                    description: "You view purchases as investments in quality and longevity rather than immediate gratification. Algorithms prioritize showing you durable goods with strong warranties and lifetime value propositions. Your perception gaps are smallest for practical, utilitarian products.",
-                    insight: "Your age group shows a 22% higher retention rate for premium brands compared to younger segments."
-                }
-            },
-            medium: {
-                young: {
-                    name: "The Aspirational Spender",
-                    description: "You're building your lifestyle and willing to invest in quality items that reflect your identity. Platforms show you aspirational brands and emphasize social proof through reviews and influencer endorsements. Your perceived value often exceeds actual price for status-signaling products.",
-                    insight: "Your segment has the highest perception gap for luxury goods (+18% on average)."
-                },
-                middle: {
-                    name: "The Quality-Focused Professional",
-                    description: "You prioritize durability, functionality, and time savings over initial cost. E-commerce algorithms highlight premium features, warranty information, and time-saving benefits. Your perception is most accurate for professional and productivity-related purchases.",
-                    insight: "This group accounts for 45% of premium electronics purchases despite being only 28% of the customer base."
-                },
-                senior: {
-                    name: "The Experienced Curator",
-                    description: "You have refined tastes and knowledge about what constitutes true quality in different product categories. Platforms show you specialized retailers and emphasize craftsmanship and materials. Your perception gaps are smallest in categories where you have extensive prior experience.",
-                    insight: "Your demographic demonstrates the most consistent price perception across different product categories."
-                }
-            },
-            high: {
-                young: {
-                    name: "The Premium Trendsetter",
-                    description: "You value exclusivity, innovation, and being an early adopter of new products. E-commerce platforms prioritize showing you limited editions, new releases, and luxury collaborations. Your perceived value is highly influenced by brand prestige and social currency.",
-                    insight: "Your segment shows a 35% higher click-through rate on premium product recommendations."
-                },
-                middle: {
-                    name: "The Connoisseur Investor",
-                    description: "You appreciate fine craftsmanship and are willing to pay premium prices for exceptional quality and performance. Algorithms highlight artisanal brands, premium materials, and exclusive buying experiences. Your perception of value incorporates both tangible quality and intangible brand value.",
-                    insight: "This group has the highest average order value (₹12,500) across all segments."
-                },
-                senior: {
-                    name: "The Discerning Patron",
-                    description: "You have the means and experience to invest in heirloom-quality items and exceptional customer experiences. Platforms offer you concierge services, exclusive access, and personalized shopping assistance. Your perception of value incorporates both product quality and service excellence.",
-                    insight: "Your demographic represents only 8% of customers but 22% of revenue from luxury categories."
-                }
-            }
-        };
-        
         // Determine age group
         function getAgeGroup(age) {
-            if (age <= 24) return 'young';
-            if (age <= 44) return 'middle';
-            return 'senior';
+            if (age <= 24) return '18-24';
+            if (age <= 34) return '25-34';
+            if (age <= 44) return '35-44';
+            if (age <= 54) return '45-54';
+            if (age <= 64) return '55-64';
+            if (age <= 74) return '65-74';
+            if (age <= 84) return '75-84';
+            return '85+';
         }
         
         // Generate avatar seed based on user data
         function generateAvatarSeed(age, gender, spending) {
             return `${age}-${gender}-${spending}`;
+        }
+
+        // Determine behavioral segment based on user data
+        function determineSegment(age, gender, spending) {
+            const ageGroup = getAgeGroup(parseInt(age));
+            const ageBasedSegment = agePatterns[ageGroup];
+            const genderBasedSegment = genderPatterns[gender];
+            
+            // For spending-based adjustment
+            let spendingAdjustment = '';
+            if (spending === 'low') spendingAdjustment = 'Budget';
+            else if (spending === 'medium-low' || spending === 'medium') spendingAdjustment = 'Value';
+            else if (spending === 'high') spendingAdjustment = 'Premium';
+            
+            // Combine factors to determine final segment
+            // Priority: Age > Gender > Spending
+            let finalSegment = ageBasedSegment;
+            
+            // If spending strongly contradicts age-based segment, adjust
+            if (spendingAdjustment && !finalSegment.includes(spendingAdjustment)) {
+                // Find a segment that matches spending category and is close to original
+                const possibleSegments = Object.keys(segments).filter(s => 
+                    s.includes(spendingAdjustment) && 
+                    s.split('-')[1] === finalSegment.split('-')[1]
+                );
+                
+                if (possibleSegments.length > 0) {
+                    finalSegment = possibleSegments[0];
+                }
+            }
+            
+            return finalSegment;
         }
         
         // Display the persona
@@ -351,13 +490,13 @@
             const age = parseInt(userData.age);
             const gender = userData.gender;
             const spending = userData.spending;
-            const ageGroup = getAgeGroup(age);
             
-            // Get the appropriate persona
-            const persona = personas[spending][ageGroup];
+            // Determine the segment
+            const segmentName = determineSegment(age, gender, spending);
+            const segment = segments[segmentName];
             
             // Display persona details
-            document.getElementById('personaName').textContent = persona.name;
+            document.getElementById('personaName').textContent = `The ${segmentName} Shopper`;
             
             // Format gender display
             let genderDisplay = gender;
@@ -378,43 +517,27 @@
             document.getElementById('personaDetails').textContent = 
                 `Age: ${age} • ${genderDisplay} • ${spendingDisplay}`;
             
-            document.getElementById('personaDescription').textContent = persona.description;
-            document.getElementById('insightText').textContent = persona.insight;
+            document.getElementById('personaDescription').textContent = segment.description;
+            
+            // Update statistics
+            document.getElementById('segmentSize').textContent = 
+                segment.count.toLocaleString();
+            document.getElementById('segmentPercentage').textContent = 
+                `${segment.percentage}%`;
+            document.getElementById('pricePerception').textContent = 
+                segment.priceGap;
+            document.getElementById('avgTransaction').textContent = 
+                segment.avgTransaction;
+            
+            // Update insight
+            document.getElementById('insightStat').textContent = '1.25 Million';
+            document.getElementById('insightText').textContent = 
+                `e-commerce transactions analyzed. ${segment.count.toLocaleString()} customers (${segment.percentage}%) share your ${segmentName} behavioral pattern.`;
             
             // Generate and display avatar
             const avatarSeed = generateAvatarSeed(age, gender, spending);
             const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${avatarSeed}&radius=50&backgroundColor=65c9ff,b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf&eyes=happy,wink,hearts&mouth=smile,laughing,twinkle`;
             document.getElementById('avatar').src = avatarUrl;
-            
-            // Generate a realistic statistic based on the persona
-            generateStatistic(ageGroup, spending, gender);
-        }
-        
-        // Generate a realistic statistic based on the dataset
-        function generateStatistic(ageGroup, spending, gender) {
-            const stats = {
-                young: {
-                    low: "680,000 people in your age group share this profile",
-                    'medium-low': "420,000 young adults demonstrate similar spending patterns",
-                    medium: "Your segment accounts for 28% of aspirational brand purchases",
-                    high: "Premium Trendsetters represent 15% of young adult shoppers"
-                },
-                middle: {
-                    low: "This is the most common profile for middle-aged budget shoppers",
-                    'medium-low': "34% of all customers fall into this behavioral segment",
-                    medium: "Your group drives 45% of premium electronics sales",
-                    high: "Connoisseur Investors have the highest customer lifetime value"
-                },
-                senior: {
-                    low: "Your demographic shows the most consistent price perception",
-                    'medium-low': "Senior shoppers account for 22% of high-retention purchases",
-                    medium: "Experienced Curators have the most accurate luxury brand perception",
-                    high: "Discerning Patrons represent 8% of customers but 22% of luxury revenue"
-                }
-            };
-            
-            document.getElementById('insightStat').textContent = 
-                stats[ageGroup][spending] || "Data pattern identified across 1.25M transactions";
         }
         
         // Initialize the page
